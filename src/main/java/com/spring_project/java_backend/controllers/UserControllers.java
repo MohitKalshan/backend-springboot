@@ -1,10 +1,11 @@
 package com.spring_project.java_backend.controllers;
 
+import com.spring_project.java_backend.dto.CreateUserDto;
 import com.spring_project.java_backend.dto.UserDto;
 import com.spring_project.java_backend.services.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +19,27 @@ public class UserControllers {
     }
 
     @GetMapping
-    public List<UserDto> getAllUSers(){
-       return this.userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUSers(){
+       return ResponseEntity.status(HttpStatus.OK).body(this.userService.getAllUsers());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(this.userService.getUserById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDto> createUser(@RequestBody CreateUserDto createUserDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.createUser(createUserDto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@RequestBody CreateUserDto updateUserDto, @PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(this.userService.updateUser(updateUserDto,id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUSer( @PathVariable String id){
+         userService.deleteUserById(id);
+         return ResponseEntity.noContent().build();
     }
 }
