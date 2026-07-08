@@ -51,4 +51,9 @@ public class UserRepository {
         }
         return null;
     }
+
+//    Delete user by id logic
+    public void deleteUserById(String id) {
+        users.removeIf( userDto -> userDto.getId().equals(id));
+    }
 }

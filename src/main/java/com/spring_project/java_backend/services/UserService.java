@@ -31,4 +31,8 @@ public class UserService {
     public UserDto updateUser(CreateUserDto updateUserDto, String id) {
         return this.userRepository.updateUser(updateUserDto, id);
     }
+
+    public void deleteUserById(String id) {
+        userRepository.deleteUserById(id);
+    }
 }
